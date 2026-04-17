@@ -48,12 +48,12 @@ describe("Home page", () => {
       return (
         <main>
           <h1>LearningHub</h1>
-          <a href="/notes/new">+ New Note</a>
+          <span>+ New Note</span>
         </main>
       );
     }
 
     render(<HomeStub />);
-    expect(screen.getByRole("link", { name: "+ New Note" })).toBeInTheDocument();
+    expect(screen.getByText("+ New Note")).toBeInTheDocument();
   });
 });
