@@ -36,8 +36,17 @@ export default function NotePage({ note }: Props) {
 
   const handleDelete = async () => {
     if (!confirm("Delete this note?")) return;
-    await fetch(`/api/notes/${note.id}`, { method: "DELETE" });
-    router.push("/");
+    try {
+      const res = await fetch(`/api/notes/${note.id}`, { method: "DELETE" });
+      if (!res.ok) {
+        const data = (await res.json().catch(() => ({}))) as { error?: string };
+        alert(data.error ?? "Failed to delete note. Please try again.");
+        return;
+      }
+      router.push("/");
+    } catch {
+      alert("An unexpected error occurred while deleting the note.");
+    }
   };
 
   return (
